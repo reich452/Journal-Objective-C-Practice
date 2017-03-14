@@ -10,7 +10,22 @@
 
 static NSString * const EntriesKey = @"entries";
 
+@interface EntryController ()
+
+@property(nonatomic, strong)NSMutableArray *internalEntries;
+
+@end
+
 @implementation EntryController
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _internalEntries = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
 
 +(EntryController *)shared
 {
@@ -26,13 +41,13 @@ static NSString * const EntriesKey = @"entries";
 
 - (void)addEntry:(Entry *)entry
 {
-    [self.entries addObject:entry];
+    [self.internalEntries addObject:entry];
     [self saveToPersistentStorage];
 }
 
 - (void)removeEntry:(Entry *)entry
 {
-    [self.entries removeObject:entry];
+    [self.internalEntries removeObject:entry];
     [self saveToPersistentStorage];
 }
 
@@ -57,7 +72,13 @@ static NSString * const EntriesKey = @"entries";
         Entry *entry = [[Entry alloc] initWithDictionary:dictionary];
         [entries addObject:entry];
     }
-    self.entries = entries;
+    self.internalEntries = entries;
+}
+
+// Sets it
+- (NSArray *)entries
+{
+    return self.internalEntries;
 }
 
 

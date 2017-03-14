@@ -11,13 +11,14 @@
 
 @interface EntryController : NSObject
 
-@property (nonatomic, copy) NSMutableArray *entries;
+@property (nonatomic, copy) NSArray *entries;
 //- (instancetype)init; //?
 
 -(void)addEntry:(Entry *)entry;
 -(void)removeEntry:(Entry *)entry;
 
-+(EntryController *)shared; 
++(EntryController *)shared;
 
+- (instancetype)init;
 
 @end

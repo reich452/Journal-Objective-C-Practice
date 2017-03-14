@@ -37,14 +37,14 @@ static NSString * const TimestampKey = @"timestamp";
     return self;
 }
 
+// Dictionary Representation -- 
 - (NSDictionary *)dictionaryCopy {
     
     return  @{
               @"title": self.title,
-              @"text": self.entryBody,
+              @"body": self.entryBody,
               @"timestamp": self.timestamp
               };
-    
 }
 
 @end

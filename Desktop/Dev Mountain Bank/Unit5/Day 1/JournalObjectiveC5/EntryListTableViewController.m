@@ -10,6 +10,7 @@
 #import "EntryController.h"
 #import "EntryDetailViewController.h"
 
+
 @interface EntryListTableViewController ()
 
 @end
@@ -36,13 +37,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"entryCell" forIndexPath:indexPath];
     Entry *entry = [EntryController shared].entries[indexPath.row];
     cell.textLabel.text = entry.title;
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@", entry.timestamp];
     return cell;
 }
 
 // Override to support editing the table view.
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
+        Entry *entry = [EntryController shared].entries[indexPath.row];
+        [[EntryController shared]removeEntry:entry];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
@@ -52,13 +55,10 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"detailVC"]) {
         NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        
         //if ([EntryController shared].entries.count == 0)
-    
         Entry *entry = [EntryController shared].entries[indexPath.row];
         EntryDetailViewController *detailViewController = segue.destinationViewController;
         detailViewController.entry = entry;
-        
     }
 }
 
